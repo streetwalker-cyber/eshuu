@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💌 A Sweet Little Date Proposal 💌</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to bottom right, #ffe6f0, #ffe);
+      transition: background-color 0.5s;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: #d63384;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+      transition: padding-top 0.3s;
+    }
+
+    p {
+      font-size: 1.3rem;
+      color: #6c3483;
+      margin: 10px 0 40px;
+      transition: padding-top 0.3s;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    .yes-btn {
+      background: linear-gradient(to right, #28a745, #218838);
+      color: white;
+      width: 130px;
+      height: 60px;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+
+    .no-btn {
+      background: linear-gradient(to right, #dc3545, #c82333);
+      color: white;
+      width: 130px;
+      height: 60px;
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.3s ease;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <h1 id="heading">🌸 Hi, Eshuuu 💖</h1>
+  <p id="question">Would you make my day and say yes to a lovely date with me?</p>
+  <div class="buttons">
+    <button class="yes-btn" id="yesBtn">Yes 💘</button>
+    <button class="no-btn" id="noBtn">No 💔</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const heading = document.getElementById("heading");
+    const question = document.getElementById("question");
+
+    const noTexts = [
+      "No 💔", "Really? 😢", "You sure? 🥺", "Please think again 💕", "Don't say no 😖",
+      "Give me a chance 😌", "Still no? 😭", "How can you resist this charm 😎", "One last time 🥹", "Okay fine 💔"
+    ];
+
+    let noClickCount = 0;
+
+    noBtn.addEventListener("click", () => {
+      noClickCount++;
+      const textIndex = noClickCount % noTexts.length;
+      noBtn.textContent = noTexts[textIndex];
+
+      const newWidth = 130 + noClickCount * 100;
+      const newHeight = 60 + noClickCount * 30;
+      yesBtn.style.width = `${newWidth}px`;
+      yesBtn.style.height = `${newHeight}px`;
+      yesBtn.style.fontSize = `${1.5 + noClickCount * 0.3}rem`;
+
+      heading.style.paddingTop = `${Math.max(0, 20 - noClickCount * 5)}px`;
+      question.style.paddingTop = `${Math.max(0, 20 - noClickCount * 5)}px`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      document.body.style.background = "linear-gradient(to bottom right, #a8e6cf, #dcedc1)";
+      yesBtn.style.fontSize = "3rem";
+      yesBtn.style.padding = "30px 60px";
+      yesBtn.textContent = "You made me so happy 💞";
+      heading.textContent = "Yaaay! 💖";
+      question.textContent = "I can't wait for our date! 🌹";
+
+      const duration = 2 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 1000
+      };
+
+      const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: {
+            x: Math.random(),
+            y: Math.random() - 0.2
+          }
+        }));
+      }, 250);
+    });
+  </script>
+</body>
+</html>
